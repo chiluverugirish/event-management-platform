@@ -1,0 +1,171 @@
+### API Root - Get API Info
+GET http://localhost:5050/
+
+###
+
+## ═══════════════════════════════════════════════════════
+##  USER AUTHENTICATION
+## ═══════════════════════════════════════════════════════
+
+### Register User
+POST http://localhost:5050/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Vaishnavi Reddy",
+  "email": "vaishu@example.com",
+  "password": "123!"
+}
+
+###
+
+### Login User (Copy the token from response)
+POST http://localhost:5050/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "vaishu@example.com",
+  "password": "123!"
+}
+
+###
+
+## ═══════════════════════════════════════════════════════
+##  EVENT MANAGEMENT
+## ═══════════════════════════════════════════════════════
+
+@token = YOUR_TOKEN_HERE
+
+### Create Event (Protected)
+POST http://localhost:5050/api/events
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Tech Conference 2025",
+  "description": "Annual technology conference with workshops and keynotes",
+  "date": "2025-12-15T10:00:00Z",
+  "endDate": "2025-12-15T18:00:00Z",
+  "location": "Convention Center, Downtown",
+  "capacity": 500,
+  "ticketTypes": {
+    "General": { "price": 50, "available": 300 },
+    "VIP": { "price": 150, "available": 150 },
+    "EarlyBird": { "price": 30, "available": 50 }
+  }
+}
+
+###
+
+### Get All Events (Public)
+GET http://localhost:5050/api/events
+
+###
+
+### Get Single Event (Public)
+GET http://localhost:5050/api/events/1
+
+###
+
+### Update Event (Protected)
+PUT http://localhost:5050/api/events/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "capacity": 600,
+  "status": "ongoing"
+}
+
+###
+
+### Delete Event (Protected)
+DELETE http://localhost:5050/api/events/1
+Authorization: Bearer {{token}}
+
+###
+
+## ═══════════════════════════════════════════════════════
+##  TICKET BOOKING
+## ═══════════════════════════════════════════════════════
+
+### Book Ticket (Protected)
+POST http://localhost:5050/api/tickets
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "eventId": 1,
+  "type": "VIP",
+  "paymentMethod": "card"
+}
+
+###
+
+### Get My Tickets (Protected)
+GET http://localhost:5050/api/tickets/my-tickets
+Authorization: Bearer {{token}}
+
+###
+
+### Cancel Ticket (Protected)
+PUT http://localhost:5050/api/tickets/cancel/1
+Authorization: Bearer {{token}}
+
+###
+
+## ═══════════════════════════════════════════════════════
+##  ATTENDEE MANAGEMENT & CHECK-IN
+## ═══════════════════════════════════════════════════════
+
+### Get Event Attendees (Protected)
+GET http://localhost:5050/api/attendees/event/1
+Authorization: Bearer {{token}}
+
+###
+
+### Check-in Attendee by Ticket ID (Protected)
+POST http://localhost:5050/api/attendees/checkin
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "ticketId": 1
+}
+
+###
+
+### Undo Check-in (Protected)
+POST http://localhost:5050/api/attendees/undo-checkin/1
+Authorization: Bearer {{token}}
+
+###
+
+### Get Check-in Statistics (Protected)
+GET http://localhost:5050/api/attendees/stats/1
+Authorization: Bearer {{token}}
+
+###
+
+## ═══════════════════════════════════════════════════════
+##  ANALYTICS & DASHBOARD
+## ═══════════════════════════════════════════════════════
+
+### Get Dashboard Analytics
+GET http://localhost:5050/api/analytics/dashboard
+Authorization: Bearer {{token}}
+
+###
+
+### Get Event Analytics (Protected)
+GET http://localhost:5050/api/analytics/event/1
+Authorization: Bearer {{token}}
+
+###
+
+### Get Revenue Analytics (Protected)
+GET http://localhost:5050/api/analytics/revenue
+Authorization: Bearer {{token}}
+
+###
+
